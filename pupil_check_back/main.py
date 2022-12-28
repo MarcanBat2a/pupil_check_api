@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from pupil_check_back import __version__
 from pupil_check_back.dependency_injection import Container
+from pupil_check_back.routes import router
 
 
 def create_app(app_name: str) -> FastAPI:
@@ -14,7 +15,7 @@ def create_app(app_name: str) -> FastAPI:
     app.container = container
 
     # Load up the routers
-
+    app.include_router(router)
     return app
 
 
