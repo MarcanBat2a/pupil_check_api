@@ -13,7 +13,6 @@ def create_app(app_name: str) -> FastAPI:
     # Bind the dependency injection container
     container = Container()
     app.container = container
-
     # Load up the routers
     app.include_router(router)
     return app

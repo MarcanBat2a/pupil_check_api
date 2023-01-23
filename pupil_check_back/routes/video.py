@@ -1,3 +1,4 @@
+from http import HTTPStatus
 import os
 
 import aiofiles
@@ -5,8 +6,13 @@ from fastapi import APIRouter, File, UploadFile
 
 video_router = APIRouter(prefix="/videos", tags=["Videos"])
 
+@video_router.get("/test", status_code=HTTPStatus.OK)
+async def test():
+    """Test."""
+    return {"message": "Video saved successfully."}
 
-@video_router.post("/save", status_code=201)
+
+@video_router.post("/save", status_code=HTTPStatus.ACCEPTED)
 async def save(video: UploadFile = File(...)):
     """Save a video."""
     try:
@@ -15,7 +21,7 @@ async def save(video: UploadFile = File(...)):
             content = await video.read()
             await out_file.write(content)
 
-        return {"Result": "OK"}
+        return HTTPStatus.ACCEPTED
     except Exception as ex:
         print(str(ex), True)
         return {"message": "Video saved successfully."}
